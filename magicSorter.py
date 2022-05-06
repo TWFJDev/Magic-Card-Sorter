@@ -1,5 +1,23 @@
 from tkinter import *
 from tkinter import ttk
+import sqlite3
+
+def querydb():
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards")
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13], card[14]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13], card[14]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
 
 # Function to help with clearing entry boxes
 def clearEntryBoxes():
@@ -159,43 +177,9 @@ treeTable.heading("Mana Cost 2", text = "Mana Cost", anchor = CENTER)
 treeTable.heading("Power/Toughness", text = "Power/Toughness", anchor = CENTER)
 treeTable.heading("Card Number", text = "Card Number", anchor = CENTER)
 
-# Add fake data
-data = [
-    ["1", "Card Name 1", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 1", "Mana Cost 1", "Mana Type 2", "Mana Cost 1", "Power/Toughness 1", "Card Number 1"],
-    ["2", "Card Name 2", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 2", "Mana Cost 2", "Mana Type 2", "Mana Cost 1", "Power/Toughness 2", "Card Number 2"],
-    ["3", "Card Name 3", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 3", "Mana Cost 3", "Mana Type 2", "Mana Cost 1", "Power/Toughness 3", "Card Number 3"],
-    ["4", "Card Name 4", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 4", "Mana Cost 4", "Mana Type 2", "Mana Cost 1", "Power/Toughness 4", "Card Number 4"],
-    ["5", "Card Name 5", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 5", "Mana Cost 5", "Mana Type 2", "Mana Cost 1", "Power/Toughness 5", "Card Number 5"],
-    ["6", "Card Name 6", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 6", "Mana Cost 6", "Mana Type 2", "Mana Cost 1", "Power/Toughness 6", "Card Number 6"],
-    ["7", "Card Name 7", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 7", "Mana Cost 7", "Mana Type 2", "Mana Cost 1", "Power/Toughness 7", "Card Number 7"],
-    ["8", "Card Name 8", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 8", "Mana Cost 8", "Mana Type 2", "Mana Cost 1", "Power/Toughness 8", "Card Number 8"],
-    ["9", "Card Name 9", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 9", "Mana Cost 9", "Mana Type 2", "Mana Cost 1", "Power/Toughness 9", "Card Number 9"],
-    ["10", "Card Name 10", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 10", "Mana Cost 10", "Mana Type 2", "Mana Cost 1", "Power/Toughness 10", "Card Number 10"],
-    ["11", "Card Name 11", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 11", "Mana Cost 11", "Mana Type 2", "Mana Cost 1", "Power/Toughness 11", "Card Number 11"],
-    ["12", "Card Name 12", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 12", "Mana Cost 12", "Mana Type 2", "Mana Cost 1", "Power/Toughness 12", "Card Number 12"],
-    ["13", "Card Name 13", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 13", "Mana Cost 13", "Mana Type 2", "Mana Cost 1", "Power/Toughness 13", "Card Number 13"],
-    ["14", "Card Name 14", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 14", "Mana Cost 14", "Mana Type 2", "Mana Cost 1", "Power/Toughness 14", "Card Number 14"],
-    ["15", "Card Name 15", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 15", "Mana Cost 15", "Mana Type 2", "Mana Cost 1", "Power/Toughness 15", "Card Number 15"],
-    ["16", "Card Name 16", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 16", "Mana Cost 16", "Mana Type 2", "Mana Cost 1", "Power/Toughness 16", "Card Number 16"],
-    ["17", "Card Name 17", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 17", "Mana Cost 17", "Mana Type 2", "Mana Cost 1", "Power/Toughness 17", "Card Number 17"],
-    ["18", "Card Name 18", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 18", "Mana Cost 18", "Mana Type 2", "Mana Cost 1", "Power/Toughness 18", "Card Number 18"],
-]
-
 # Create Striped Rows
 treeTable.tag_configure('oddrow', background = "lightpink")
 treeTable.tag_configure('evenrow', background = "white")
-
-# Add data to screen
-count = 0
-
-for card in data:
-    if count % 2 == 0:
-        treeTable.insert(parent = '', index = 'end', iid = count, text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13], card[14]), tags = ('evenrow',))
-    else:
-        treeTable.insert(parent = '', index = 'end', iid = count, text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13], card[14]), tags = ('oddrow',))
-    
-    # Increment counter
-    count += 1
 
 # Add card data frame
 cardDataFrame = LabelFrame(magicSorter, text = "Card Data:")
@@ -327,6 +311,8 @@ clearEntries.grid(row = 0, column = 5, padx = 10, pady = 10)
 
 # Key binding
 treeTable.bind("<ButtonRelease-1>", selectACard)
+
+querydb()
 
 # Closing window
 magicSorter.mainloop()

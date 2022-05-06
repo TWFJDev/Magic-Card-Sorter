@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import sqlite3
 
 def querydb():
@@ -12,9 +13,9 @@ def querydb():
     # Add data to screen
     for card in card:
         if int(str(card[0])) % 2 == 0:
-            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13], card[14]), tags = ('evenrow',))
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
         else:
-            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13], card[14]), tags = ('oddrow',))
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
 
     conn.commit()
     conn.close()
@@ -26,7 +27,6 @@ def clearEntryBoxes():
     typeEntry.delete(0, END)
     subTypeEntry.delete(0, END)
     manaType1Entry.delete(0, END)
-    manaCost1Entry.delete(0, END)
     manaType2Entry.delete(0, END)
     manaCost2Entry.delete(0, END)
     powerToughnessEntry.delete(0, END)
@@ -37,7 +37,34 @@ def clearEntryBoxes():
     type6Entry.delete(0, END)
     type7Entry.delete(0, END)
 
-#def addACard():
+def addACard():
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("INSERT INTO cards VALUES(:card_name, :type_1, :type_2, :type_3, :type_4, :type_5, :type_6, :type_7, :mana_type_1, :mana_type_2, :mana_cost_1, :power_toughness, :card_number )", {
+        'card_name' : cardNameEntry.get(), 
+        'type_1' : typeEntry.get(), 
+        'type_2' : subTypeEntry.get(),
+        'type_3' : type3Entry.get(),
+        'type_4' : type4Entry.get(),
+        'type_5' : type5Entry.get(),
+        'type_6' : type6Entry.get(),
+        'type_7' : type7Entry.get(), 
+        'mana_type_1' : manaType1Entry.get(),
+        'mana_type_2' : manaType2Entry.get(), 
+        'mana_cost_1' : manaCost2Entry.get(), 
+        'power_toughness' : powerToughnessEntry.get(), 
+        'card_number' : cardNumberEntry.get()
+    })
+
+    conn.commit()
+    conn.close()
+
+    clearEntryBoxes()
+
+    treeTable.delete(*treeTable.get_children())
+
+    querydb()
 
 # Selecting a card
 def selectACard(e):
@@ -52,11 +79,10 @@ def selectACard(e):
     typeEntry.insert(0, values[2])
     subTypeEntry.insert(0, values[3])
     manaType1Entry.insert(0, values[9])
-    manaCost1Entry.insert(0, values[10])
-    manaType2Entry.insert(0, values[11])
-    manaCost2Entry.insert(0, values[12])
-    powerToughnessEntry.insert(0, values[13])
-    cardNumberEntry.insert(0, values[14])
+    manaType2Entry.insert(0, values[10])
+    manaCost2Entry.insert(0, values[11])
+    powerToughnessEntry.insert(0, values[12])
+    cardNumberEntry.insert(0, values[13])
     type3Entry.insert(0, values[4])
     type4Entry.insert(0, values[5])
     type5Entry.insert(0, values[6])
@@ -76,13 +102,50 @@ def updateACard():
         type5Entry.get(),
         type6Entry.get(),
         type7Entry.get(), 
-        manaType1Entry.get(), 
-        manaCost1Entry.get(),
+        manaType1Entry.get(),
         manaType2Entry.get(), 
         manaCost2Entry.get(), 
         powerToughnessEntry.get(), 
         cardNumberEntry.get()
         ))
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("""UPDATE cards SET
+        card_name = :card_name,
+        type_1 = :type_1,
+        type_2 = :type_2,
+        type_3 = :type_3,
+        type_4 = :type_4,
+        type_5 = :type_5,
+        type_6 = :type_6,
+        type_7 = :type_7,
+        mana_type_1 = :mana_type_1,
+        mana_type_2 = :mana_type_2,
+        mana_cost_2 = :mana_cost_1,
+        power_toughness = :power_toughness,
+        card_number = :card_number 
+
+        WHERE oid = :oid""", {
+           'card_name' : cardNameEntry.get(), 
+           'type_1' : typeEntry.get(), 
+           'type_2' : subTypeEntry.get(),
+           'type_3' : type3Entry.get(),
+           'type_4' : type4Entry.get(),
+           'type_5' : type5Entry.get(),
+           'type_6' : type6Entry.get(),
+           'type_7' : type7Entry.get(), 
+           'mana_type_1' : manaType1Entry.get(),
+           'mana_type_2' : manaType2Entry.get(), 
+           'mana_cost_1' : manaCost2Entry.get(), 
+           'power_toughness' : powerToughnessEntry.get(), 
+           'card_number' : cardNumberEntry.get(),
+           'oid' : itemNumberEntry.get()
+        })
+
+    conn.commit()
+    conn.close()
 
     clearEntryBoxes()
 
@@ -90,6 +153,18 @@ def updateACard():
 def removeACard():
     x = treeTable.selection()[0]
     treeTable.delete(x)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("DELETE FROM cards WHERE oid = " + itemNumberEntry.get())
+
+    conn.commit()
+    conn.close()
+
+    messagebox.showinfo("Magic Card Sorter", "Your card has been deleted")
+
+    clearEntryBoxes()
 
 # Removing many cards
 def removeMultipleCards():
@@ -100,11 +175,43 @@ def removeMultipleCards():
 
 # Removing everything
 def removeCards():
+    response = messagebox.askyesno("Magic Card Sorter", "Are you sure you want to delete every card?")
+
+    if response == 1:
+        conn = sqlite3.connect('magicCards.db')
+        c = conn.cursor()
+
+        c.execute("DROP TABLE cards")
+
+        c.execute("""CREATE TABLE IF NOT EXISTS cards(
+            card_name TEXT,
+            type_1 TEXT,
+            type_2 TEXT,
+            type_3 TEXT,
+            type_4 TEXT,
+            type_5 TEXT,
+            type_6 TEXT,
+            type_7 TEXT,
+            mana_type_1 TEXT,
+            mana_type_2 TEXT,
+            mana_cost_2 TEXT,
+            power_toughness TEXT,
+            card_number TEXT
+        )""")
+
+        conn.commit()
+        conn.close()
+
+        clearEntryBoxes()
+
+
     for card in treeTable.get_children():
         treeTable.delete(card)
 
+   
+
 magicSorter = Tk()
-magicSorter.title('Card Sorter!')
+magicSorter.title('Magic Card Sorter')
 
 # Styling
 style = ttk.Style()
@@ -139,7 +246,7 @@ treeTable.pack()
 treeScroll.config(command = treeTable.yview)
 
 # Define columns
-treeTable['columns'] = ("Item #", "Card Name", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 1", "Mana Cost 1", "Mana Type 2", "Mana Cost 2", "Power/Toughness", "Card Number")
+treeTable['columns'] = ("Item #", "Card Name", "Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7", "Mana Type 1", "Mana Type 2", "Mana Cost 2", "Power/Toughness", "Card Number")
 
 # Format Columns
 treeTable.column("#0", width = 0, stretch = NO)
@@ -153,7 +260,6 @@ treeTable.column("Type 5", anchor = CENTER, width = 100)
 treeTable.column("Type 6", anchor = CENTER, width = 100)
 treeTable.column("Type 7", anchor = CENTER, width = 100)
 treeTable.column("Mana Type 1", anchor = CENTER, width = 100)
-treeTable.column("Mana Cost 1", anchor = CENTER, width = 100)
 treeTable.column("Mana Type 2", anchor = CENTER, width = 100)
 treeTable.column("Mana Cost 2", anchor = CENTER, width = 100)
 treeTable.column("Power/Toughness", anchor = CENTER, width = 150)
@@ -171,7 +277,6 @@ treeTable.heading("Type 5", text = "Type 5", anchor = CENTER)
 treeTable.heading("Type 6", text = "Type 6", anchor = CENTER)
 treeTable.heading("Type 7", text = "Type 7", anchor = CENTER)
 treeTable.heading("Mana Type 1", text = "Mana Type 1", anchor = CENTER)
-treeTable.heading("Mana Cost 1", text = "Mana Cost", anchor = CENTER)
 treeTable.heading("Mana Type 2", text = "Mana Type 2", anchor = CENTER)
 treeTable.heading("Mana Cost 2", text = "Mana Cost", anchor = CENTER)
 treeTable.heading("Power/Toughness", text = "Power/Toughness", anchor = CENTER)
@@ -233,12 +338,6 @@ manaType1Label.grid(row = 0, column = 0, padx = 10, pady = 10)
 manaType1Entry = Entry(manaDataFrame, border = 2)
 manaType1Entry.grid(row = 0, column = 1, padx = 10, pady = 10)
 
-manaCost1Label = Label(manaDataFrame, text = "Mana Cost:")
-manaCost1Label.grid(row = 0, column = 2, padx = 10, pady = 10)
-
-manaCost1Entry = Entry(manaDataFrame, border = 2)
-manaCost1Entry.grid(row = 0, column = 3, padx = 10, pady = 10)
-
 manaType2Label = Label(manaDataFrame, text = "Mana Type 2:")
 manaType2Label.grid(row = 0, column = 4, padx = 10, pady = 10)
 
@@ -291,13 +390,13 @@ commandDataFrame = LabelFrame(magicSorter, text = "Commands:")
 commandDataFrame.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
 
 # Add command buttons
-addCard = Button(commandDataFrame, text = "Add A Card")
+addCard = Button(commandDataFrame, text = "Add A Card", command = addACard)
 addCard.grid(row = 0, column = 0, padx = 10, pady = 10)
 
-updateCard = Button(commandDataFrame, text = "Update A Card", command = updateACard)
+updateCard = Button(commandDataFrame, text = "Update Card", command = updateACard)
 updateCard.grid(row = 0, column = 1, padx = 10, pady = 10)
 
-removeCard = Button(commandDataFrame, text = "Remove A Card", command = removeACard)
+removeCard = Button(commandDataFrame, text = "Remove Card", command = removeACard)
 removeCard.grid(row = 0, column = 2, padx = 10, pady = 10)
 
 removeManyCards = Button(commandDataFrame, text = "Remove Multiple Cards", command = removeMultipleCards)

@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import colorchooser
 import sqlite3
 
+# Makes sure that there is always is a database
 def createDBIfNotExist():
     conn = sqlite3.connect('magicCards.db')
     c = conn.cursor()
@@ -27,6 +29,7 @@ def createDBIfNotExist():
     conn.commit()
     conn.close()
 
+# Look through database when program starts
 def querydb():
     conn = sqlite3.connect('magicCards.db')
     c = conn.cursor()
@@ -61,6 +64,7 @@ def clearEntryBoxes():
     type6Entry.delete(0, END)
     type7Entry.delete(0, END)
 
+# Adding a new card
 def addACard():
     conn = sqlite3.connect('magicCards.db')
     c = conn.cursor()
@@ -202,12 +206,10 @@ def removeMultipleCards():
         for card in x:
             rowIDToDelete.append(treeTable.item(card, 'values')[0])
 
-        print(rowIDToDelete)
-
         conn = sqlite3.connect('magicCards.db')
         c = conn.cursor()
 
-
+        c.executemany("DELETE FROM cards WHERE oid = ?", [(n,) for n in rowIDToDelete])
 
         conn.commit()
         conn.close()
@@ -244,18 +246,55 @@ def removeCards():
         )""")
 
         conn.commit()
-        conn.close()
+        conn.close()    
 
         clearEntryBoxes()
-
 
     for card in treeTable.get_children():
         treeTable.delete(card)
 
-   
+    querydb()
 
 magicSorter = Tk()
 magicSorter.title('Magic Card Sorter')
+magicSorter.minsize()
+
+def evenRowColor():
+    evenRowColor = colorchooser.askcolor()[1]
+
+    if evenRowColor:
+        # Create Striped Rows
+        treeTable.tag_configure('evenrow', background = evenRowColor)
+
+def oddRowColor():
+    oddRowColor = colorchooser.askcolor()[1]
+
+    if oddRowColor:
+        # Create Striped Rows
+        treeTable.tag_configure('oddrow', background = oddRowColor)
+
+def highlightColor():
+    highlightRowColor = colorchooser.askcolor()[1]
+    
+    if highlightRowColor:
+        style.map('Treeview', 
+            background = [('selected', highlightRowColor)])
+
+
+# Create a menu
+itemMenu = Menu(magicSorter)
+magicSorter.config(menu = itemMenu)
+
+# Config menu
+optionMenu = Menu(itemMenu, tearoff = 0)
+itemMenu.add_cascade(label = "Options", menu = optionMenu)
+
+#Drop down menu
+optionMenu.add_command(label = "Even Row Color", command = evenRowColor)
+optionMenu.add_command(label = "Odd Row Color", command = oddRowColor)
+optionMenu.add_command(label = "Highlight Color", command = highlightColor)
+optionMenu.add_separator()
+optionMenu.add_command(label = "Exit", command = magicSorter.quit)
 
 # Styling
 style = ttk.Style()
@@ -349,7 +388,7 @@ treeTable.heading("Power/Toughness", text = "Power/Toughness", anchor = CENTER)
 treeTable.heading("Card Number", text = "Card Number", anchor = CENTER)
 
 # Create Striped Rows
-treeTable.tag_configure('oddrow', background = "lightpink")
+treeTable.tag_configure('oddrow', background = "lightblue")
 treeTable.tag_configure('evenrow', background = "white")
 
 # Add card data frame
@@ -477,6 +516,7 @@ clearEntries.grid(row = 0, column = 5, padx = 10, pady = 10)
 # Key binding
 treeTable.bind("<ButtonRelease-1>", selectACard)
 
+# Look through database when program starts
 querydb()
 
 # Create database if one does not exist
@@ -486,4 +526,4 @@ createDBIfNotExist()
 magicSorter.mainloop()
 
 # Search bar for each field
-# setup messagebox for empty entries (if blank let user know to enter something or use a N/A placeholder)
+# Add a color changer

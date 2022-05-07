@@ -42,3 +42,5 @@ instance/
 
 # MISC
 .env
+.db
+.sqlite

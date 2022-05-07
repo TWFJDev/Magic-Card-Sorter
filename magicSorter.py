@@ -3,6 +3,30 @@ from tkinter import ttk
 from tkinter import messagebox
 import sqlite3
 
+def createDBIfNotExist():
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("""CREATE TABLE IF NOT EXISTS cards(
+        card_name TEXT,
+        type_1 TEXT,
+        type_2 TEXT,
+        type_3 TEXT,
+        type_4 TEXT,
+        type_5 TEXT,
+        type_6 TEXT,
+        type_7 TEXT,
+        mana_type_1 TEXT,
+        mana_type_2 TEXT,
+        mana_cost_2 TEXT,
+        power_toughness TEXT,
+        card_number TEXT
+    )""")
+
+
+    conn.commit()
+    conn.close()
+
 def querydb():
     conn = sqlite3.connect('magicCards.db')
     c = conn.cursor()
@@ -168,10 +192,30 @@ def removeACard():
 
 # Removing many cards
 def removeMultipleCards():
-    x = treeTable.selection()
+    response = messagebox.askyesno("Magic Card Sorter", "Are you sure you want to delete the selected card?")
+
+    if response == 1:
+        x = treeTable.selection()
+
+        rowIDToDelete = []
+
+        for card in x:
+            rowIDToDelete.append(treeTable.item(card, 'values')[0])
+
+        print(rowIDToDelete)
+
+        conn = sqlite3.connect('magicCards.db')
+        c = conn.cursor()
+
+
+
+        conn.commit()
+        conn.close()
 
     for card in x:
         treeTable.delete(card)
+
+    clearEntryBoxes()
 
 # Removing everything
 def removeCards():
@@ -229,6 +273,28 @@ style.configure("Treeview",
 # Change selected color
 style.map('Treeview',
     background = [('selected', '#A4A8A4')])
+
+conn = sqlite3.connect('magicCards.db')
+c = conn.cursor()
+
+c.execute("""CREATE TABLE IF NOT EXISTS cards(
+    card_name TEXT,
+    type_1 TEXT,
+    type_2 TEXT,
+    type_3 TEXT,
+    type_4 TEXT,
+    type_5 TEXT,
+    type_6 TEXT,
+    type_7 TEXT,
+    mana_type_1 TEXT,
+    mana_type_2 TEXT,
+    mana_cost_2 TEXT,
+    power_toughness TEXT,
+    card_number TEXT
+)""")
+
+conn.commit()
+conn.close()
 
 # Create Treeview frame
 treeFrame = Frame(magicSorter)
@@ -413,7 +479,11 @@ treeTable.bind("<ButtonRelease-1>", selectACard)
 
 querydb()
 
+# Create database if one does not exist
+createDBIfNotExist()
+
 # Closing window
 magicSorter.mainloop()
 
 # Search bar for each field
+# setup messagebox for empty entries (if blank let user know to enter something or use a N/A placeholder)

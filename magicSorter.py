@@ -64,6 +64,22 @@ def clearEntryBoxes():
     type6Entry.delete(0, END)
     type7Entry.delete(0, END)
 
+# Search items
+# - Card Name
+# - Type 1
+# - Type 2
+# - Type 3
+# - Type 4
+# - Type 5
+# - Type 6
+# - Type 7
+# - Mana Type 1
+# - Mana Type 2
+# - Mana Cost
+# - Power/Toughness
+# - Card Number
+
+
 # Adding a new card
 def addACard():
     conn = sqlite3.connect('magicCards.db')
@@ -526,4 +542,4 @@ createDBIfNotExist()
 magicSorter.mainloop()
 
 # Search bar for each field
-# Add a color changer
+# For adding a card have it check if card name, type 1, card number, mana type 1, mana type 2, mana cost is blank. if so messagebox letting them know to finish the fields

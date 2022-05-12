@@ -64,22 +64,463 @@ def clearEntryBoxes():
     type6Entry.delete(0, END)
     type7Entry.delete(0, END)
 
-# Search items
-# - Card Name
-# - Type 1
-# - Type 2
-# - Type 3
-# - Type 4
-# - Type 5
-# - Type 6
-# - Type 7
-# - Mana Type 1
-# - Mana Type 2
-# - Mana Cost
-# - Power/Toughness
-# - Card Number
+def cardnamePopup():
+    global cardNameTopEntry, cardNameTop
+    cardNameTop = Toplevel(magicSorter)
+    cardNameTop.title("Look Up Card Name")
 
+    cardNameTopFrame = LabelFrame(cardNameTop, text = "Card Name:")
+    cardNameTopFrame.pack(padx = 10, pady = 10)
 
+    cardNameTopEntry = Entry(cardNameTopFrame, font=("Helvetica", 18), border = 2)
+    cardNameTopEntry.pack(padx = 10, pady = 10)
+
+    cardNameTopButton = Button(cardNameTopFrame, text = "Search cards", command = cardNameDatabase)
+    cardNameTopButton.pack(padx= 10, pady = 10)
+
+def type1Popup():
+    global type1TopEntry, type1Top
+    type1Top = Toplevel(magicSorter)
+    type1Top.title("Look Up the First Type")
+
+    type1TopFrame = LabelFrame(type1Top, text = "Type 1:")
+    type1TopFrame.pack(padx = 10, pady = 10)
+
+    type1TopEntry = Entry(type1TopFrame, font=("Helvetica", 18), border = 2)
+    type1TopEntry.pack(padx = 10, pady = 10)
+
+    type1TopButton = Button(type1TopFrame, text = "Search cards", command = type1Database)
+    type1TopButton.pack(padx= 10, pady = 10)
+
+def type2Popup():
+    global type2TopEntry, type2Top
+    type2Top = Toplevel(magicSorter)
+    type2Top.title("Look Up the Second Type")
+
+    type2TopFrame = LabelFrame(type2Top, text = "Type 2:")
+    type2TopFrame.pack(padx = 10, pady = 10)
+
+    type2TopEntry = Entry(type2TopFrame, font=("Helvetica", 18), border = 2)
+    type2TopEntry.pack(padx = 10, pady = 10)
+
+    type2TopButton = Button(type2TopFrame, text = "Search cards", command = type2Database)
+    type2TopButton.pack(padx= 10, pady = 10)
+
+def type3Popup():
+    global type3TopEntry, type3Top
+    type3Top = Toplevel(magicSorter)
+    type3Top.title("Look Up the Third Type")
+
+    type3TopFrame = LabelFrame(type3Top, text = "Type 3:")
+    type3TopFrame.pack(padx = 10, pady = 10)
+
+    type3TopEntry = Entry(type3TopFrame, font=("Helvetica", 18), border = 2)
+    type3TopEntry.pack(padx = 10, pady = 10)
+
+    type3TopButton = Button(type3TopFrame, text = "Search cards", command = type3Database)
+    type3TopButton.pack(padx= 10, pady = 10)
+
+def type4Popup():
+    global type4TopEntry, type4Top
+    type4Top = Toplevel(magicSorter)
+    type4Top.title("Look Up the Fourth Type")
+
+    type4TopFrame = LabelFrame(type4Top, text = "Type 4:")
+    type4TopFrame.pack(padx = 10, pady = 10)
+
+    type4TopEntry = Entry(type4TopFrame, font=("Helvetica", 18), border = 2)
+    type4TopEntry.pack(padx = 10, pady = 10)
+
+    type4TopButton = Button(type4TopFrame, text = "Search cards", command = type4Database)
+    type4TopButton.pack(padx= 10, pady = 10)
+
+def type5Popup():
+    global type5TopEntry, type5Top
+    type5Top = Toplevel(magicSorter)
+    type5Top.title("Look Up the Fifth Type")
+
+    type5TopFrame = LabelFrame(type5Top, text = "Type 5:")
+    type5TopFrame.pack(padx = 10, pady = 10)
+
+    type5TopEntry = Entry(type5TopFrame, font=("Helvetica", 18), border = 2)
+    type5TopEntry.pack(padx = 10, pady = 10)
+
+    type5TopButton = Button(type5TopFrame, text = "Search cards", command = type5Database)
+    type5TopButton.pack(padx= 10, pady = 10)
+
+def type6Popup():
+    global type6TopEntry, type6Top
+    type6Top = Toplevel(magicSorter)
+    type6Top.title("Look Up the Sixth Type")
+
+    type6TopFrame = LabelFrame(type6Top, text = "Type 6:")
+    type6TopFrame.pack(padx = 10, pady = 10)
+
+    type6TopEntry = Entry(type6TopFrame, font=("Helvetica", 18), border = 2)
+    type6TopEntry.pack(padx = 10, pady = 10)
+
+    type6TopButton = Button(type6TopFrame, text = "Search cards", command = type6Database)
+    type6TopButton.pack(padx= 10, pady = 10)
+
+def type7Popup():
+    global type7TopEntry, type7Top
+    type7Top = Toplevel(magicSorter)
+    type7Top.title("Look Up the Seventh Type")
+
+    type7TopFrame = LabelFrame(type7Top, text = "Type 7:")
+    type7TopFrame.pack(padx = 10, pady = 10)
+
+    type7TopEntry = Entry(type7TopFrame, font=("Helvetica", 18), border = 2)
+    type7TopEntry.pack(padx = 10, pady = 10)
+
+    type7TopButton = Button(type7TopFrame, text = "Search cards", command = type7Database)
+    type7TopButton.pack(padx= 10, pady = 10)
+
+def manaTypePopup():
+    global manaTypeTopEntry, manaTypeTop
+    manaTypeTop = Toplevel(magicSorter)
+    manaTypeTop.title("Look Up the Mana Type")
+
+    manaTypeTopFrame = LabelFrame(manaTypeTop, text = "Mana Type:")
+    manaTypeTopFrame.pack(padx = 10, pady = 10)
+
+    manaTypeTopEntry = Entry(manaTypeTopFrame, font=("Helvetica", 18), border = 2)
+    manaTypeTopEntry.pack(padx = 10, pady = 10)
+
+    manaTypeButton = Button(manaTypeTopFrame, text = "Search cards", command = manaTypeDatabase)
+    manaTypeButton.pack(padx= 10, pady = 10)
+
+def manaCostPopup():
+    global manaCostTopEntry, manaCostTop
+    manaCostTop = Toplevel(magicSorter)
+    manaCostTop.title("Look Up the Mana Cost")
+
+    manaCostTopFrame = LabelFrame(manaCostTop, text = "Mana Cost:")
+    manaCostTopFrame.pack(padx = 10, pady = 10)
+
+    manaCostTopEntry = Entry(manaCostTopFrame, font=("Helvetica", 18), border = 2)
+    manaCostTopEntry.pack(padx = 10, pady = 10)
+
+    manaCostButton = Button(manaCostTopFrame, text = "Search cards", command = manaCostDatabase)
+    manaCostButton.pack(padx= 10, pady = 10)
+
+def powerToughnessPopup():
+    global powerToughnessTopEntry, powerToughnessTop
+    powerToughnessTop = Toplevel(magicSorter)
+    powerToughnessTop.title("Look Up the Power/Toughness")
+
+    powerToughnessTopFrame = LabelFrame(powerToughnessTop, text = "Power/Toughness:")
+    powerToughnessTopFrame.pack(padx = 10, pady = 10)
+
+    powerToughnessTopEntry = Entry(powerToughnessTopFrame, font=("Helvetica", 18), border = 2)
+    powerToughnessTopEntry.pack(padx = 10, pady = 10)
+
+    powerToughnessTopButton = Button(powerToughnessTopFrame, text = "Search cards", command = powerToughnessDatabase)
+    powerToughnessTopButton.pack(padx= 10, pady = 10)
+
+def cardNumberPopup():
+    global cardNumberTopEntry, cardNumberTop
+    cardNumberTop = Toplevel(magicSorter)
+    cardNumberTop.title("Look Up Card Number")
+
+    cardNumberTopFrame = LabelFrame(cardNumberTop, text = "Card Number:")
+    cardNumberTopFrame.pack(padx = 10, pady = 10)
+
+    cardNumberTopEntry = Entry(cardNumberTopFrame, font=("Helvetica", 18), border = 2)
+    cardNumberTopEntry.pack(padx = 10, pady = 10)
+
+    cardNumberTopButton = Button(cardNumberTopFrame, text = "Search cards", command = cardNumberDatabase)
+    cardNumberTopButton.pack(padx= 10, pady = 10)
+
+def cardNameDatabase():
+    searchCard = cardNameTopEntry.get()
+    cardNameTop.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE card_name like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def type1Database():
+    searchCard = type1TopEntry.get()
+    type1Top.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE type_1 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def type2Database():
+    searchCard = type2TopEntry.get()
+    type2Top.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE type_2 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def type3Database():
+    searchCard = type3TopEntry.get()
+    type3Top.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE type_3 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def type4Database():
+    searchCard = type4TopEntry.get()
+    type4Top.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE type_4 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def type5Database():
+    searchCard = type5TopEntry.get()
+    type5Top.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE type_5 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def type6Database():
+    searchCard = type6TopEntry.get()
+    type6Top.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE type_6 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def type7Database():
+    searchCard = type7TopEntry.get()
+    type7Top.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE type_7 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def manaTypeDatabase():
+    searchCard = manaTypeTopEntry.get()
+    manaTypeTop.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE mana_type_1 like ?", (searchCard,))
+    c.execute("SELECT rowid, * FROM cards WHERE mana_type_2 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def manaCostDatabase():
+    searchCard = manaCostTopEntry.get()
+    manaCostTop.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE mana_cost_2 like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def powerToughnessDatabase():
+    searchCard = powerToughnessTopEntry.get()
+    powerToughnessTop.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE power_toughness like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+
+def cardNumberDatabase():
+    searchCard = cardNumberTopEntry.get()
+    cardNumberTop.destroy()
+
+    for card in treeTable.get_children():
+        treeTable.delete(card)
+
+    conn = sqlite3.connect('magicCards.db')
+    c = conn.cursor()
+
+    c.execute("SELECT rowid, * FROM cards WHERE card_number like ?", (searchCard,))
+
+    card = c.fetchall()
+
+    # Add data to screen
+    for card in card:
+        if int(str(card[0])) % 2 == 0:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('evenrow',))
+        else:
+            treeTable.insert(parent = '', index = 'end', iid = card[0], text = '', values = (card[0], card[1], card[2], card[3], card[4], card[5], card[6], card[7], card[8], card[9], card[10], card[11], card[12], card[13]), tags = ('oddrow',))
+
+    conn.commit()
+    conn.close()
+    
 # Adding a new card
 def addACard():
     conn = sqlite3.connect('magicCards.db')
@@ -297,20 +738,38 @@ def highlightColor():
             background = [('selected', highlightRowColor)])
 
 
-# Create a menu
+# Create an option menu
 itemMenu = Menu(magicSorter)
 magicSorter.config(menu = itemMenu)
 
-# Config menu
+# Config option menu
 optionMenu = Menu(itemMenu, tearoff = 0)
 itemMenu.add_cascade(label = "Options", menu = optionMenu)
 
-#Drop down menu
+#Drop down option menu
 optionMenu.add_command(label = "Even Row Color", command = evenRowColor)
 optionMenu.add_command(label = "Odd Row Color", command = oddRowColor)
 optionMenu.add_command(label = "Highlight Color", command = highlightColor)
 optionMenu.add_separator()
 optionMenu.add_command(label = "Exit", command = magicSorter.quit)
+
+# Config search menu
+searchMenu = Menu(itemMenu, tearoff = 0)
+itemMenu.add_cascade(label = "Search", menu = searchMenu)
+
+# Drop down search menu
+searchMenu.add_command(label = "Card Name", command = cardnamePopup)
+searchMenu.add_command(label = "Type 1", command = type1Popup)
+searchMenu.add_command(label = "Type 2", command = type2Popup)
+searchMenu.add_command(label = "Type 3", command = type3Popup)
+searchMenu.add_command(label = "Type 4", command = type4Popup)
+searchMenu.add_command(label = "Type 5", command = type5Popup)
+searchMenu.add_command(label = "Type 6", command = type6Popup)
+searchMenu.add_command(label = "Type 7", command = type7Popup)
+searchMenu.add_command(label = "Mana Type", command = manaTypePopup)
+searchMenu.add_command(label = "Mana Cost", command = manaCostPopup)
+searchMenu.add_command(label = "Power/Toughness", command = powerToughnessPopup)
+searchMenu.add_command(label = "Card Number", command = cardNumberPopup)
 
 # Styling
 style = ttk.Style()
@@ -541,5 +1000,4 @@ createDBIfNotExist()
 # Closing window
 magicSorter.mainloop()
 
-# Search bar for each field
 # For adding a card have it check if card name, type 1, card number, mana type 1, mana type 2, mana cost is blank. if so messagebox letting them know to finish the fields

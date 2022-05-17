@@ -25,7 +25,6 @@ def createDBIfNotExist():
         card_number TEXT
     )""")
 
-
     conn.commit()
     conn.close()
 
@@ -299,8 +298,6 @@ def reloadAfterSearch():
 
     querydb()
 
-# mana type 1, mana type 2, mana cost
-
 # Adding a new card
 def addACard():
     conn = sqlite3.connect('magicCards.db')
@@ -382,61 +379,89 @@ def selectACard(e):
 
 # Updating card info
 def updateACard():
-    selected = treeTable.focus()
-    treeTable.item(selected, text = "", values = (
-        itemNumberEntry.get(), 
-        cardNameEntry.get(), 
-        typeEntry.get(), 
-        subTypeEntry.get(),
-        type3Entry.get(),
-        type4Entry.get(),
-        type5Entry.get(),
-        type6Entry.get(),
-        type7Entry.get(), 
-        manaType1Entry.get(),
-        manaType2Entry.get(), 
-        manaCost2Entry.get(), 
-        powerToughnessEntry.get(), 
-        cardNumberEntry.get()
-        ))
 
-    conn = sqlite3.connect('magicCards.db')
-    c = conn.cursor()
+    cardName = cardNameEntry.get()
+    type1 = typeEntry.get()
+    cardNumber = cardNumberEntry.get()
+    manaType1 = manaType1Entry.get()
+    manaType2 = manaType2Entry.get()
+    manaCost = manaCost2Entry.get()
 
-    c.execute("""UPDATE cards SET
-        card_name = :card_name,
-        type_1 = :type_1,
-        type_2 = :type_2,
-        type_3 = :type_3,
-        type_4 = :type_4,
-        type_5 = :type_5,
-        type_6 = :type_6,
-        type_7 = :type_7,
-        mana_type_1 = :mana_type_1,
-        mana_type_2 = :mana_type_2,
-        mana_cost_2 = :mana_cost_1,
-        power_toughness = :power_toughness,
-        card_number = :card_number 
+    if cardName == '':
+        messagebox.showerror("Magic Card Sorter", "Please fill out the 'card name' box!")
 
-        WHERE oid = :oid""", {
-           'card_name' : cardNameEntry.get(), 
-           'type_1' : typeEntry.get(), 
-           'type_2' : subTypeEntry.get(),
-           'type_3' : type3Entry.get(),
-           'type_4' : type4Entry.get(),
-           'type_5' : type5Entry.get(),
-           'type_6' : type6Entry.get(),
-           'type_7' : type7Entry.get(), 
-           'mana_type_1' : manaType1Entry.get(),
-           'mana_type_2' : manaType2Entry.get(), 
-           'mana_cost_1' : manaCost2Entry.get(), 
-           'power_toughness' : powerToughnessEntry.get(), 
-           'card_number' : cardNumberEntry.get(),
-           'oid' : card[0]
-        })
+    elif type1 == '':
+        messagebox.showerror("Magic Card Sorter", "Please fill out 'type 1' box!")
 
-    conn.commit()
-    conn.close()
+    elif cardNumber == '':
+        messagebox.showerror("Magic Card Sorter", "Please fill out the 'card number' box!")
+
+    elif manaType1 == '':
+        messagebox.showerror("Magic Card Sorter", "Please fill out the 'mana type 1' box!")
+
+    elif manaType2 == '':
+        messagebox.showerror("Magic Card Sorter", "Please fill out the 'mana type 2' box!")
+
+    elif manaCost == '':
+        messagebox.showerror("Magic Card Sorter", "Please fill out the 'mana cost' box!")
+
+    else:
+  
+        selected = treeTable.focus()
+        treeTable.item(selected, text = "", values = (
+            itemNumberEntry.get(), 
+            cardNameEntry.get(), 
+            typeEntry.get(), 
+            subTypeEntry.get(),
+            type3Entry.get(),
+            type4Entry.get(),
+            type5Entry.get(),
+            type6Entry.get(),
+            type7Entry.get(), 
+            manaType1Entry.get(),
+            manaType2Entry.get(), 
+            manaCost2Entry.get(), 
+            powerToughnessEntry.get(), 
+            cardNumberEntry.get()
+            ))
+    
+        conn = sqlite3.connect('magicCards.db')
+        c = conn.cursor()
+    
+        c.execute("""UPDATE cards SET
+            card_name = :card_name,
+            type_1 = :type_1,
+            type_2 = :type_2,
+            type_3 = :type_3,
+            type_4 = :type_4,
+            type_5 = :type_5,
+            type_6 = :type_6,
+            type_7 = :type_7,
+            mana_type_1 = :mana_type_1,
+            mana_type_2 = :mana_type_2,
+            mana_cost_2 = :mana_cost_1,
+            power_toughness = :power_toughness,
+            card_number = :card_number 
+    
+            WHERE oid = :oid""", {
+               'card_name' : cardNameEntry.get(), 
+               'type_1' : typeEntry.get(), 
+               'type_2' : subTypeEntry.get(),
+               'type_3' : type3Entry.get(),
+               'type_4' : type4Entry.get(),
+               'type_5' : type5Entry.get(),
+               'type_6' : type6Entry.get(),
+               'type_7' : type7Entry.get(), 
+               'mana_type_1' : manaType1Entry.get(),
+               'mana_type_2' : manaType2Entry.get(), 
+               'mana_cost_1' : manaCost2Entry.get(), 
+               'power_toughness' : powerToughnessEntry.get(), 
+               'card_number' : cardNumberEntry.get(),
+               'oid' : card[0]
+            })
+
+        conn.commit()
+        conn.close()
 
     clearEntryBoxes()
 
@@ -520,7 +545,6 @@ def removeCards():
 
 magicSorter = Tk()
 magicSorter.title('Magic Card Sorter')
-magicSorter.minsize()
 
 def evenRowColor():
     evenRowColor = colorchooser.askcolor()[1]
@@ -543,6 +567,156 @@ def highlightColor():
         style.map('Treeview', 
             background = [('selected', highlightRowColor)])
 
+def optionsIntruc():
+    options = Tk()
+    options.title("Options Instructions")
+
+    instruc = LabelFrame(options)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    optionsexplain = Label(instruc, text = "Using the 'Options Menu' you have three options \n EVEN ROW COLOR, ODD ROW COLOR and HIGHLIGHT COLOR \n ----- \n EVEN ROW COLOR is used to change the even row color \n ODD ROW COLOR is used to change the odd row color \n HIGHLIGHT COLOR is used to change of the row that is clicked on")
+    optionsexplain.grid(row = 0, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = options.destroy, padx = 10, pady = 3)
+    close.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+def searchInstruc():
+    search = Tk()
+    search.title("Search Instructions")
+
+    instruc = LabelFrame(search)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    searchexplain = Label(instruc, text = "Using the 'Search Menu' you have 6 things you can search \n CARD NAME, TYPES, MANA TYPES, MANA COST, POWER/TOUGHNESS \n and CARD NUMBER")
+    searchexplain.grid(row = 0, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = search.destroy, padx = 10, pady = 3)
+    close.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+def entriesInstruc():
+    entries = Tk()
+    entries.title("Entries Instructions")
+
+    instruc = LabelFrame(entries)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    entryexplain = Label(instruc, text = "Using the many different entry boxes on the bottom of the table.. you will \n use these to enter all the info from the cards \n ----- \n The required entries are \n Card Name, Type 1, Card Number, Mana Type 1 and 2, Power/Toughness \n and the Mana Cost")
+    entryexplain.grid(row = 0, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = entries.destroy, padx = 10, pady = 3)
+    close.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+def addACardInstruc():
+    add = Tk()
+    add.title("Add A Card Instructions")
+
+    instruc = LabelFrame(add)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    addCard = Button(instruc, text = "Add A Card")
+    addCard.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    explain = Label(instruc, text = "When adding a card there a few entry boxes that \n are required -refer back to the ENTRIES INSTRUCTIONS. Fill out \n the required fields and finally add your card")
+    explain.grid(row = 1, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = add.destroy, padx = 10, pady = 3)
+    close.grid(row = 2, column = 0, padx = 10, pady = 10)
+
+def updateCardIntruc():
+    update = Tk()
+    update.title("Update Card Instructions")
+
+    instruc = LabelFrame(update)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    updateCard = Button(instruc, text = "Update Card")
+    updateCard.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    explain = Label(instruc, text = "When updating a card.. click on a row in the \n table.. then edit the the desired fields and press UPDATE \n CARD to finalize the changes")
+    explain.grid(row = 1, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = update.destroy, padx = 10, pady = 3)
+    close.grid(row = 2, column = 0, padx = 10, pady = 10)
+
+def removeCardInsturc():
+    removeOne = Tk()
+    removeOne.title("Remove One Card Instructions")
+
+    instruc = LabelFrame(removeOne)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    removeCard = Button(instruc, text = "Remove Card")
+    removeCard.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    explain = Label(instruc, text = "To remove a card.. click on the row that has \n the card you want to delete.. then press REMOVE CARD")
+    explain.grid(row = 1, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = removeOne.destroy, padx = 10, pady = 3)
+    close.grid(row = 2, column = 0, padx = 10, pady = 10)
+
+def removeMultipleCardsInstruc():
+    removeMult = Tk()
+    removeMult.title("Remove Multiple Cards Instructions")
+
+    instruc = LabelFrame(removeMult)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    removemultiCard = Button(instruc, text = "Remove Multiple Cards")
+    removemultiCard.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    explain = Label(instruc, text = "To remove multiple cards at once.. use ctrl + click to \n choose multiple at once")
+    explain.grid(row = 1, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = removeMult.destroy, padx = 10, pady = 3)
+    close.grid(row = 2, column = 0, padx = 10, pady = 10)
+
+def removeAllCardsInstruc():
+    removeAll = Tk()
+    removeAll.title("Remove All Cards Instructions")
+
+    instruc = LabelFrame(removeAll)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    removeallCard = Button(instruc, text = "Remove All Cards")
+    removeallCard.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    explain = Label(instruc, text = "If you decide you want to start from the beginning \n and erase everything permanently use REMOVE ALL CARDS")
+    explain.grid(row = 1, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = removeAll.destroy, padx = 10, pady = 3)
+    close.grid(row = 2, column = 0, padx = 10, pady = 10)
+
+def clearEntriesInstruc():
+    clear = Tk()
+    clear.title("Clear Entries Instructions")
+
+    instruc = LabelFrame(clear)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    removeallCard = Button(instruc, text = "Remove All Cards")
+    removeallCard.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    explain = Label(instruc, text = "If you dont want to manually clear the entries you \n can use this button to clear them all at once")
+    explain.grid(row = 1, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = clear.destroy, padx = 10, pady = 3)
+    close.grid(row = 2, column = 0, padx = 10, pady = 10)
+
+def viewAllInstruc():
+    viewAll = Tk()
+    viewAll.title("View All Instructions")
+
+    instruc = LabelFrame(viewAll)
+    instruc.pack(fill = 'x', expand = 'yes', padx = 10, pady = 10)
+
+    finishsearch = Button(instruc, text = "Finish Search")
+    finishsearch.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    explain = Label(instruc, text = "After Searching use VIEW ALL the reload the table")
+    explain.grid(row = 1, column = 0, padx = 10)
+
+    close = Button(instruc, text = "Close", command = viewAll.destroy, padx = 10, pady = 3)
+    close.grid(row = 2, column = 0, padx = 10, pady = 10)
 
 # Create an option menu
 itemMenu = Menu(magicSorter)
@@ -570,6 +744,22 @@ searchMenu.add_command(label = "Mana Type", command = manaTypePopup)
 searchMenu.add_command(label = "Mana Cost", command = manaCostPopup)
 searchMenu.add_command(label = "Power/Toughness", command = powerToughnessPopup)
 searchMenu.add_command(label = "Card Number", command = cardNumberPopup)
+
+# Config instructions menu
+instrucMenu = Menu(itemMenu, tearoff = 0)
+itemMenu.add_cascade(label = "Instructions", menu = instrucMenu)
+
+# Drop down instructions menu
+instrucMenu.add_command(label = "Options", command = optionsIntruc)
+instrucMenu.add_command(label = "Search", command = searchInstruc)
+instrucMenu.add_command(label = "Entries", command = entriesInstruc)
+instrucMenu.add_command(label = "Add A Card", command = addACardInstruc)
+instrucMenu.add_command(label = "Update Card", command = updateCardIntruc)
+instrucMenu.add_command(label = "Remove Card", command = removeCardInsturc)
+instrucMenu.add_command(label = "Remove Multiple Cards", command = removeMultipleCardsInstruc)
+instrucMenu.add_command(label = "Remove All Cards", command = removeAllCardsInstruc)
+instrucMenu.add_command(label = "Clear Entries", command = clearEntriesInstruc)
+instrucMenu.add_command(label = "View All", command = viewAllInstruc)
 
 # Styling
 style = ttk.Style()
@@ -793,7 +983,7 @@ clearEntries = Button(commandDataFrame, text = "Clear Entries", command = clearE
 clearEntries.grid(row = 0, column = 5, padx = 10, pady = 10)
 
 # Reload table after search
-reloadTable = Button(commandDataFrame, text = "Finish Search", command = reloadAfterSearch)
+reloadTable = Button(commandDataFrame, text = "View All", command = reloadAfterSearch)
 reloadTable.grid(row = 0, column = 6, padx = 10, pady = 10)
 
 # Key binding
